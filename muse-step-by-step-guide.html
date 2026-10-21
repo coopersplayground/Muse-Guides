@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<title>Muse — Step by Step: From First Message to Full Autopilot</title>
+<style>
+:root{
+  --bg:#f7f5f0; --panel:#ffffff; --panel2:#f0ece3; --ink:#1c1a17; --muted:#6b655c;
+  --line:#ddd6c9; --accent:#b4551d; --accent-ink:#ffffff; --code-bg:#20241f; --code-ink:#e9e4d8;
+  --good:#2e7d46; --warn:#9a6a00; --chip:#efe8db;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#141311; --panel:#1d1c19; --panel2:#26241f; --ink:#ece7dc; --muted:#a89f90;
+    --line:#38352e; --accent:#e07b3a; --accent-ink:#1a120b; --code-bg:#0d0e0c; --code-ink:#e9e4d8;
+    --good:#6fc183; --warn:#e0b34a; --chip:#2c2a24;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,'Iowan Old Style',serif;line-height:1.65;font-size:17px}
+h1,h2,h3,.sans{font-family:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px 80px}
+header.top{padding:56px 0 10px}
+.kicker{font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
+h1{font-size:clamp(32px,6vw,52px);line-height:1.08;margin:10px 0 14px}
+.lede{font-size:19px;color:var(--muted);max-width:680px}
+.progress{margin:26px 0 6px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-family:-apple-system,'Segoe UI',sans-serif;font-size:14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.bar{flex:1;min-width:140px;height:10px;background:var(--bg);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+nav.toc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin:24px 0 10px}
+nav.toc h3{margin:0 0 10px;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+nav.toc ol{margin:0;padding-left:22px;columns:2;column-gap:36px}
+nav.toc li{margin:4px 0;break-inside:avoid;font-size:15.5px}
+@media(max-width:640px){nav.toc ol{columns:1}}
+section.step{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:30px 30px 26px;margin:28px 0}
+@media(max-width:640px){section.step{padding:22px 18px}}
+.stepnum{font-family:-apple-system,'Segoe UI',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+section.step h2{font-size:27px;margin:6px 0 10px;line-height:1.2}
+section.step h3{font-size:19px;margin:24px 0 6px}
+p{margin:10px 0}
+ul,ol{margin:8px 0 12px;padding-left:24px}
+li{margin:5px 0}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;font-family:-apple-system,'Segoe UI',sans-serif}
+th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+th{background:var(--panel2)}
+.prompt,.code{position:relative;background:var(--code-bg);color:var(--code-ink);border-radius:10px;padding:16px 18px;margin:14px 0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+.prompt::before{content:"SAY TO MUSE";display:block;font-size:11px;letter-spacing:.14em;color:#c9a06a;margin-bottom:8px;font-family:-apple-system,'Segoe UI',sans-serif;font-weight:700}
+.copy{position:absolute;top:10px;right:10px;background:#3a3f38;color:#e9e4d8;border:1px solid #565c54;border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;font-family:-apple-system,'Segoe UI',sans-serif}
+.copy:hover{background:#4a5048}
+.callout{border:1px solid var(--line);background:var(--panel2);border-radius:10px;padding:14px 18px;margin:16px 0;font-size:15.5px}
+.callout b.tag{font-family:-apple-system,'Segoe UI',sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:4px}
+.checklist{list-style:none;padding:0;margin:14px 0}
+.checklist li{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border:1px solid var(--line);border-radius:9px;margin:7px 0;cursor:pointer;background:var(--bg);font-size:15.5px}
+.checklist li .box{flex:none;width:20px;height:20px;border:2px solid var(--muted);border-radius:5px;margin-top:3px;display:grid;place-items:center;font-size:14px;color:transparent}
+.checklist li.done{opacity:.62}
+.checklist li.done .box{background:var(--good);border-color:var(--good);color:#fff}
+.checklist li.done .txt{text-decoration:line-through}
+.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:16px 0}
+.price .tier{border:1px solid var(--line);border-radius:12px;padding:18px;background:var(--bg)}
+.price .tier h4{margin:0 0 4px;font-family:-apple-system,'Segoe UI',sans-serif;font-size:16px}
+.price .amt{font-family:-apple-system,'Segoe UI',sans-serif;font-size:26px;font-weight:700;color:var(--accent)}
+.price .tier p{font-size:14.5px;color:var(--muted);margin:6px 0 0}
+footer{color:var(--muted);font-size:14px;margin-top:40px;text-align:center}
+.small{font-size:14.5px;color:var(--muted)}
+.warn{color:var(--warn);font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="kicker">The Deep-Dive Build Guide</div>
+  <h1>Muse, Step by Step: From First Message to a Machine That Runs Your Business</h1>
+  <p class="lede">This is the in-depth companion to the beginner and advanced guides. Twelve steps, in build order: pick the box, say the right first words, teach Muse your world, connect it, give it keys safely, put it on your own server and on HyndSyte hosting, wire up databases and Node apps — then turn on the advanced machinery. Every step has the exact prompt to paste.</p>
+  <div class="progress"><span id="ptext">0 of 12 steps checked off</span><div class="bar"><i id="pfill"></i></div><span class="small">Tick steps off as you finish them — the bar tracks this session.</span></div>
+</header>
+
+<nav class="toc">
+  <h3>The build order</h3>
+  <ol>
+    <li><a href="#s1">Pick the box</a></li>
+    <li><a href="#s2">First conversation — what to ask</a></li>
+    <li><a href="#s3">Teach it your world</a></li>
+    <li><a href="#s4">Connect accounts &amp; skills</a></li>
+    <li><a href="#s5">“Program it” — no code required</a></li>
+    <li><a href="#s6">SSH &amp; keys, done safely</a></li>
+    <li><a href="#s7">Give it a home server</a></li>
+    <li><a href="#s8">Websites &amp; apps on HyndSyte + cPanel</a></li>
+    <li><a href="#s9">Databases that survive</a></li>
+    <li><a href="#s10">Node apps in production</a></li>
+    <li><a href="#s11">Schedules, watchers &amp; autopilot</a></li>
+    <li><a href="#s12">Advanced: agents, voice, business ops</a></li>
+  </ol>
+</nav>
+
+<section class="step" id="s1">
+  <div class="stepnum">Step 1</div>
+  <h2>Pick the box — the hardware Muse will live on</h2>
+  <p>Muse itself runs in the cloud, but the moment you want it to hold files, run servers, watch cameras, or keep working while your laptop sleeps, it needs a home: an always-on machine on your network. You do not need a supercomputer. You need uptime, storage, and enough RAM for the jobs you hand it.</p>
+  <table>
+    <tr><th>Tier</th><th>What it is</th><th>Good for</th><th>Rough cost</th></tr>
+    <tr><td><b>Starter</b></td><td>A retired desktop or mini-PC you already own, 16&nbsp;GB RAM, any SSD</td><td>File storage, n8n automations, a personal dashboard, learning the ropes</td><td>$0–150</td></tr>
+    <tr><td><b>Workhorse</b></td><td>Modern mini-PC or workstation, 32–64&nbsp;GB RAM, 1–2&nbsp;TB NVMe</td><td>Everything above plus Docker stacks, local AI models (Ollama), media, multiple websites</td><td>$400–900</td></tr>
+    <tr><td><b>Homelab server</b></td><td>Dedicated server-class box, 64&nbsp;GB+ RAM, mirrored storage</td><td>Business operations: hosting client sites, camera systems, voice stack, local agents at scale</td><td>$1,000+</td></tr>
+  </table>
+  <h3>The five buying rules</h3>
+  <ul>
+    <li><b>RAM beats CPU.</b> Containers, databases, and local models all eat memory first. 32&nbsp;GB is the sweet spot to grow into.</li>
+    <li><b>SSD or nothing.</b> Spinning drives make everything — including Muse's patience — slower. NVMe if the board allows it.</li>
+    <li><b>It must run 24/7 quietly.</b> If it sounds like a hair dryer, you'll unplug it, and autopilot dies with it.</li>
+    <li><b>Put it on a UPS.</b> A $60 battery backup turns a power flicker from a corrupted database into a non-event. Set the BIOS to <i>Restore on AC Power Loss → Power On</i> so the whole stack resurrects itself.</li>
+    <li><b>Wire it, don't Wi-Fi it.</b> Ethernet to the router or switch. Servers on Wi-Fi are a troubleshooting hobby you didn't ask for.</li>
+  </ul>
+  <h3>Operating system</h3>
+  <p>Install <b>Ubuntu Server LTS</b> (or Ubuntu Desktop if you want a GUI for the first week). Linux is where Docker, Node, and every tool in this guide assume you live. During install: enable OpenSSH, create your user, and write the machine's local IP down — you'll reserve it in your router so it never drifts.</p>
+  <div class="prompt">I'm setting up a home machine for you to work on. It's Ubuntu Server with [RAM] and [storage]. Walk me through, one step at a time: reserving a fixed IP on my router, enabling SSH, and the first security updates. Explain each command before I run it.<button class="copy">Copy</button></div>
+  <ul class="checklist" data-step>
+    <li><span class="box">✓</span><span class="txt">Box chosen and plugged into Ethernet + UPS</span></li>
+    <li><span class="box">✓</span><span class="txt">Ubuntu installed, OpenSSH enabled</span></li>
+    <li><span class="box">✓</span><span class="txt">Fixed/reserved IP set in the router</span></li>
+    <li><span class="box">✓</span><span class="txt">BIOS set to power back on after power loss</span></li>
+  </ul>
+</section>
+
+<section class="step" id="s2">
+  <div class="stepnum">Step 2</div>
+  <h2>The first conversation — what to actually ask Muse</h2>
+  <p>Most people waste their first week with a new AI asking it trivia. The highest-value first move is an <b>intake interview</b>: let Muse ask <i>you</i> the questions, then store the answers. Ten minutes here saves you re-explaining yourself forever.</p>
+  <div class="prompt">Before we do anything else, interview me. Ask me about my work, my family, my schedule, how I like answers formatted, what I never want you to do without asking, and what matters most this month. Ask a few questions at a time, and when we're done, save a summary as my standing profile and read it back to me for corrections.<button class="copy">Copy</button></div>
+  <h3>Then set the house rules, in plain English</h3>
+  <div class="prompt">These are my standing rules — save them and follow them always: (1) Ask before sending anything to another person. (2) Questions are questions — if I ask something, answer it, don't go do things. (3) Show me a plan before any change that costs money or can't be undone. (4) Keep answers short unless I ask for depth. Confirm you've saved each rule.<button class="copy">Copy</button></div>
+  <h3>Five first-week prompts that pay for themselves</h3>
+  <ol>
+    <li><b>“Here's my week — find the conflicts.”</b> Paste your calendar or describe it; Muse spots double-bookings and prep gaps.</li>
+    <li><b>“Turn this brain-dump into a plan.”</b> Talk messy for two minutes; get back an ordered list with owners and dates.</li>
+    <li><b>“What should I know about X before my meeting?”</b> Real research with sources, not vibes.</li>
+    <li><b>“Draft it in my voice.”</b> Give one past email as a sample; every future draft starts from your tone.</li>
+    <li><b>“Remind me every weekday at 8 to…”</b> Your first scheduled job — the moment Muse stops being a chatbot and starts being staff.</li>
+  </ol>
+  <div class="callout"><b class="tag">The golden rule of asking</b>State the outcome, the constraints, and the finish line: <i>“Write a quote email for a bathroom remodel, under $150 words, friendly but firm on the deposit, and show me the draft — don't send it.”</i> Vague in, vague out.</div>
+  <ul class="checklist" data-step>
+    <li><span class="box">✓</span><span class="txt">Intake interview done, profile read back and corrected</span></li>
+    <li><span class="box">✓</span><span class="txt">Standing house rules saved</span></li>
+    <li><span class="box">✓</span><span class="txt">First scheduled reminder created</span></li>
+  </ul>
+</section>
+
+<section class="step" id="s3">
+  <div class="stepnum">Step 3</div>
+  <h2>Teach it your world — memory, people, projects</h2>
+  <p>Muse's memory is layered: a curated profile of durable facts, plus daily notes. You build it by <i>correcting</i> it, not by writing essays. Whenever it gets something wrong, say so once — “My daughter's school is Fairview, not Crestwood” — and ask it to save the correction.</p>
+  <ul>
+    <li><b>People:</b> names, relationships, schools, birthdays, how to reach them. Muse keeps a page per person and stops mixing them up.</li>
+    <li><b>Projects &amp; businesses:</b> what each venture does, its pricing, its rules (“never discount the annual plan”). Business rules saved once are quoted back in every draft.</li>
+    <li><b>Preferences:</b> food, tone, tools, “don't ever do X.” Preferences are the cheapest quality upgrade there is.</li>
+    <li><b>Corrections compound:</b> a month of small corrections produces an assistant that sounds like it's worked for you for years — because, in memory terms, it has.</li>
+  </ul>
+  <div class="prompt">Show me everything you currently have saved about me, my family, and my businesses, grouped by topic. I'll correct anything wrong line by line — update your memory as we go.<button class="copy">Copy</button></div>
+  <div class="callout"><b class="tag">Privacy posture</b>Memory lives in your Muse workspace, and you can inspect or delete any of it on request: <i>“Forget everything about X.”</i> Never dictate passwords, card numbers, or government IDs into memory — credentials belong in a password vault (Step 6), never in chat or notes.</div>
+  <ul class="checklist" data-step>
+    <li><span class="box">✓</span><span class="txt">People pages started for household/family</span></li>
+    <li><span class="box">✓</span><span class="txt">Business facts and pricing saved</span></li>
+    <li><span class="box">✓</span><span class="txt">Reviewed the full memory readout once</span></li>
+  </ul>
+</section>
+
+<section class="step" id="s4">
+  <div class="stepnum">Step 4</div>
+  <h2>Connect accounts and load skills</h2>
+  <p>Out of the box Muse can talk. Connected, it can <i>do</i>: read your email, run your calendar, search your files. Connect in this order — each unlocks the next:</p>
+  <ol>
+    <li><b>Email (Gmail or your business mailbox)</b> — triage, drafting, follow-up tracking.</li>
+    <li><b>Calendar</b> — scheduling, conflict checks, morning briefings that know your day.</li>
+    <li><b>Drive / Docs</b> — research and writing grounded in your real documents.</li>
+    <li><b>Business tools as needed</b> — Stripe for payments, Shopify for a store, social accounts for posting.</li>
+  </ol>
+  <p><b>Skills</b> are reusable playbooks — flight booking, inbox management, shopping, trip planning, home control, and dozens more. You don't install them like apps; you trigger them by asking for the outcome (“find me a flight to…”). Ask Muse what's available for a job before assuming it can't.</p>
+  <div class="prompt">Which of my accounts are connected right now, and what can you actually do with each? Then tell me the three connections that would save me the most time based on my profile, and walk me through connecting the first one.<button class="copy">Copy</button></div>
+  <ul class="checklist" data-step>
+    <li><span class="box">✓</span><span class="txt">Email connected and a test triage run</span></li>
+    <li><span class="box">✓</span><span class="txt">Calendar connected; tomorrow's day summarized</span></li>
+    <li><span class="box">✓</span><span class="txt">One business tool connected (Stripe, Shopify, or social)</span></li>
+  </ul>
+</section>
+
+<section class="step" id="s5">
+  <div class="stepnum">Step 5</div>
+  <h2>“Program it all” — with Muse, in plain English</h2>
+  <p>Here's the mental shift: you are not writing code, you are <b>specifying behavior</b>. Muse writes the code, runs it, tests it, and shows you the result. Your job is the same as managing a good developer: clear spec, review the demo, request changes in words.</p>
+  <h3>The build loop that works</h3>
+  <ol>
+    <li><b>Describe the outcome, not the implementation.</b> “A page that shows today's jobs and lets me tap one to text the customer directions” — not “a React app with a REST API.”</li>
+    <li><b>Ask for a plan first on anything big.</b> Data it needs, screens, what could go wrong. Approve the plan, then say “build it.”</li>
+    <li><b>Review the working thing, not the code.</b> Muse builds pages you can open, tap, and break. Your feedback is about behavior: “the total is wrong when tax is added.”</li>
+    <li><b>Iterate in small bites.</b> One change per message lands cleanly; ten changes in one message land eventually, with confusion.</li>
+  </ol>
+  <div class="prompt">I want a simple tool that [describe the outcome]. Before building: give me a short plan — what it will do, what information it needs from me, and what it will NOT do. I'll approve the plan, then you build a first version I can open and test.<button class="copy">Copy</button></div>
+  <h3>What Muse can build for you</h3>
+  <ul>
+    <li><b>Pages &amp; dashboards</b> — guides like this one, quote calculators, status boards, family command centers.</li>
+    <li><b>Automations &amp; scripts</b> — rename 400 photos, reconcile a spreadsheet against invoices, watch a folder and file things.</li>
+    <li><b>Real apps</b> — with the server from Step 7 or HyndSyte hosting (Step 8): booking systems, client portals, stores, internal tools with logins and databases.</li>
+    <li><b>Documents &amp; media</b> — PDFs, spreadsheets, narrated videos, images — produced from your data, not templates.</li>
+  </ul>
+  <div class="callout"><b class="tag">Say this when stuck</b>“Explain what you built like I'm the customer, not the programmer — what do I click, what happens, and what happens if something goes wrong?” If the explanation doesn't match your mental picture, the build doesn't either. Fix the picture first.</div>
+  <ul class="checklist" data-step>
+    <li><span class="box">✓</span><span class="txt">First small tool built from a plan you approved</span></li>
+    <li><span class="box">✓</span><span class="txt">One change requested and landed cleanly</span></li>
+    <li><span class="box">✓</span><span class="txt">You can explain what it does without reading code</span></li>
+  </ul>
+</section>
+
+<section class="step" id="s6">
+  <div class="stepnum">Step 6</div>
+  <h2>SSH &amp; keys — giving Muse hands on your machines, safely</h2>
+  <p>SSH is the remote control for servers. A <b>key pair</b> replaces passwords: the private key stays on the machine that connects <i>from</i>, the public key goes on the server. No password ever travels, and there's nothing to phish or brute-force once password login is turned off.</p>
+  <h3>Generate and install a key (you run this once)</h3>
+  <div class="code">ssh-keygen -t ed25519 -C "muse-access"
+ssh-copy-id youruser@192.168.50.50
+ssh youruser@192.168.50.50<button class="copy">Copy</button></div>
+  <h3>Then harden the server</h3>
+  <div class="code">sudo nano /etc/ssh/sshd_config
+# set:  PasswordAuthentication no
+# set:  PermitRootLogin no
+sudo systemctl restart ssh<button class="copy">Copy</button></div>
+  <p class="warn">Before restarting SSH with password login off, keep your current session open and test the key in a second window. Locking yourself out is a rite of passage you can skip.</p>
+  <h3>The safety rules that make this sane</h3>
+  <ul>
+    <li><b>Dedicated user, not root.</b> Muse works as its own user (e.g. <i>cosmo</i>) with sudo only where needed — every action is attributable and revocable.</li>
+    <li><b>Keys live on machines, never in chat.</b> <span class="warn">Never paste a private key or password into any chat, ever.</span> If a setup needs a secret, it gets typed on the machine itself or stored in its config file with locked-down permissions.</li>
+    <li><b>Keep a kill switch.</b> One command (or one edited file) that revokes Muse's access: remove its public key from <i>~/.ssh/authorized_keys</i>, or disable its user. Know where it is before you need it.</li>
+    <li><b>Reach home from anywhere via Tailscale</b> (Step 7) instead of opening SSH ports to the internet.</li>
+  </ul>
+  <div class="prompt">I want you to be able to work on my home server over SSH as a dedicated user — not root, no password login. Give me the exact setup checklist in order, including how I revoke your access in one step if I ever need to. Don't ask me to paste any key or password here.<button class="copy">Copy</button></div>
+  <ul class="checklist" data-step>
+    <li><span class="box">✓</span><span class="txt">Key pair created; passwordless login tested in a second window</span></li>
+    <li><span class="box">✓</span><span class="txt">Password authentication disabled on the server</span></li>
+    <li><span class="box">✓</span><span class="txt">Dedicated non-root user for Muse; revoke step written down</span></li>
+  </ul>
+</section>
+
+<section class="step" id="s7">
+  <div class="stepnum">Step 7</div>
+  <h2>Give it a home — the always-on server stack</h2>
+  <p>With the box from Step 1 and keys from Step 6, you assemble the home base. Four layers, in this order:</p>
+  <h3>1. Tailscale — your private network</h3>
+  <p>Install Tailscale on the server, your phone, and your laptop. Every device gets a private address and can reach the others from anywhere — no port forwarding, no exposed services. This is how Muse's infrastructure, your servers, and you all find each other safely.</p>
+  <div class="code">curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up<button class="copy">Copy</button></div>
+  <h3>2. Docker — the app shelf</h3>
+  <p>Docker runs each service in its own container: install, update, or delete without breaking the neighbors. The starter stack most homes end up with:</p>
+  <table>
+    <tr><th>Service</th><th>Why it's there</th></tr>
+    <tr><td><b>n8n</b></td><td>Visual automations — “when this happens, do that” across hundreds of apps, no code</td></tr>
+    <tr><td><b>Ollama</b></td><td>Local AI models on your hardware — private, free per use, the engine for local agents (Step 12)</td></tr>
+    <tr><td><b>A database</b></td><td>Postgres or SQLite for the apps Muse builds (Step 9)</td></tr>
+    <tr><td><b>Your apps</b></td><td>Whatever Muse builds for you, containerized and restart-proof</td></tr>
+    <tr><td><b>A reverse proxy</b></td><td>One front door with HTTPS for everything on the box</td></tr>
+  </table>
+  <h3>3. n8n — automations you can see</h3>
+  <p>Three starter flows cover half of home-and-business automation: (1) new form submission → email + spreadsheet row + text message; (2) nightly backup check → alert only if something failed; (3) RSS/web watcher → morning summary. Ask Muse to design the flow, then import and test it with you.</p>
+  <h3>4. Backups — the layer everyone skips once</h3>
+  <p>Nightly, automatic, and <i>off the box</i>: database dumps and data folders copied to a second drive or a cloud bucket. A backup you've never restored is a rumor — do one test restore in the first month.</p>
+  <div class="prompt">Design my home server stack: Tailscale, Docker, n8n, Ollama, and nightly off-box backups. Give me the install order with exact commands, what each piece is for in plain English, and a checklist to verify each layer works before we move on.<button class="copy">Copy</button></div>
+  <ul class="checklist" data-step>
+    <li><span class="box">✓</span><span class="txt">Tailscale up on server, phone, laptop — server reachable from phone off-Wi-Fi</span></li>
+    <li><span class="box">✓</span><span class="txt">Docker running; n8n opens in a browser</span></li>
+    <li><span class="box">✓</span><span class="txt">First n8n flow tested end to end</span></li>
+    <li><span class="box">✓</span><span class="txt">Nightly backup scheduled — and one test restore done</span></li>
+  </ul>
+</section>
+
+<section class="step" id="s8">
+  <div class="stepnum">Step 8</div>
+  <h2>Run websites &amp; apps on HyndSyte with cPanel</h2>
+  <p>Your home box is for <i>your</i> operations. Public websites — your business site, client sites, anything customers touch — belong on real hosting with real uptime. That's what HyndSyte hosting is for, and Muse can run the whole cPanel side with you: domains, files, databases, email, SSL.</p>
+  <div class="price">
+    <div class="tier"><h4>Starter Hosting</h4><div class="amt">$2.50<span style="font-size:15px">/mo</span></div><p>Intro rate, then $10/mo — or lock $2.50/mo for a full year at $30/yr. Your site, live, on managed hosting.</p></div>
+    <div class="tier"><h4>Hosting + Apps</h4><div class="amt">$15<span style="font-size:15px">/mo</span></div><p>Hosting plus 400+ one-click apps and 1 email account — WordPress and friends, installed in minutes.</p></div>
+    <div class="tier"><h4>Premium</h4><div class="amt">$25<span style="font-size:15px">/mo</span></div><p>More data, unlimited traffic, 5 email accounts, and human support. Add-ons: extra email $5 each; phone numbers $20 first, $5 each after. AI agents billed by usage.</p></div>
+  </div>
+  <h3>The cPanel workflow, step by step</h3>
+  <ol>
+    <li><b>Point the domain.</b> Register or transfer the domain, set nameservers/DNS as your welcome email specifies, and wait for propagation (usually under an hour).</li>
+    <li><b>Create the site in cPanel.</b> Domains → Create a New Domain for each site or subdomain. Each gets its own document root folder — keep them separate from day one.</li>
+    <li><b>Turn on SSL.</b> Security → SSL/TLS → run AutoSSL (Let's Encrypt). Never launch a site that says “Not Secure.”</li>
+    <li><b>Deploy the site.</b> Three routes: one-click installer (WordPress etc.) from the apps library; File Manager upload for a static site Muse built; or Git deployment for apps under active development.</li>
+    <li><b>Email on the domain.</b> Email Accounts → create <i>you@yourdomain.com</i>, set up the phone app or webmail, and add the SPF/DKIM records cPanel generates so your mail lands in inboxes, not spam.</li>
+  </ol>
+  <div class="prompt">I'm launching [site name] on my HyndSyte hosting. Take me through it in order: DNS check, creating the domain in cPanel, AutoSSL, uploading the site you built me, and setting up my domain email with SPF and DKIM. One step at a time, and tell me how to verify each one worked.<button class="copy">Copy</button></div>
+  <div class="callout"><b class="tag">Home box vs. hosting — the rule</b>Experiments, internal tools, and automation live at home where they're free and private. Anything a customer sees lives on HyndSyte hosting (or the managed VPS below) where uptime is someone else's 3&nbsp;a.m. problem. When a home project graduates to customers, Muse can migrate it — that's a normal, planned move, not a rescue.</div>
+  <ul class="checklist" data-step>
+    <li><span class="box">✓</span><span class="txt">Domain pointed; site created in cPanel with its own folder</span></li>
+    <li><span class="box">✓</span><span class="txt">AutoSSL on — padlock in the browser</span></li>
+    <li><span class="box">✓</span><span class="txt">Site deployed and clicked through on your phone</span></li>
+    <li><span class="box">✓</span><span class="txt">Domain email sending/receiving; SPF + DKIM in place</span></li>
+  </ul>
+</section>
+
+<section class="step" id="s9">
+  <div class="stepnum">Step 9</div>
+  <h2>Databases — where your apps keep the truth</h2>
+  <p>A website shows things; a database <i>remembers</i> them. Customers, orders, bookings, inventory — if it must survive a restart, it lives in a database. Muse designs the tables; you approve what gets remembered.</p>
+  <h3>Pick the right database</h3>
+  <table>
+    <tr><th>Database</th><th>Use it when</th></tr>
+    <tr><td><b>SQLite</b></td><td>One app, modest data, zero administration. A single file — back it up by copying it. Perfect for tools Muse builds at home.</td></tr>
+    <tr><td><b>MySQL / MariaDB</b></td><td>cPanel hosting, WordPress and most one-click apps. Created in cPanel → MySQL Databases, with its own user per app.</td></tr>
+    <tr><td><b>PostgreSQL</b></td><td>Serious apps on your server or VPS — the default choice for new Node builds (Step 10).</td></tr>
+  </table>
+  <h3>Create one in cPanel (the pattern never changes)</h3>
+  <ol>
+    <li>cPanel → <b>MySQL Databases</b> → create the database (note the prefixed name, e.g. <i>acct_shopdb</i>).</li>
+    <li>Create a <b>user</b> with a generated password — store it in the app's config on the server, never in chat or email.</li>
+    <li><b>Add the user to the database</b> with the privileges the app needs — most apps want ALL on their own database only.</li>
+    <li>Put the four values (host, database, user, password) in the app's <i>.env</i> or config file. That's the whole handshake.</li>
+  </ol>
+  <div class="prompt">Design the database for [app idea]. List the tables and what each one stores, in plain English, and flag anything personal or sensitive we'd be keeping. Keep it as simple as possible — I'd rather add a table later than overbuild now.<button class="copy">Copy</button></div>
+  <div class="callout"><b class="tag">Backups, again — because databases are the crown jewels</b>cPanel → Backup gives you one-click database exports; on your own server, a nightly <i>mysqldump</i>/<i>pg_dump</i> cron job does the same. Schedule it the day the database is born, and keep copies off the machine the database lives on.</div>
+  <ul class="checklist" data-step>
+    <li><span class="box">✓</span><span class="txt">Database type chosen for a reason you can state</span></li>
+    <li><span class="box">✓</span><span class="txt">One user per app; credentials in server config only</span></li>
+    <li><span class="box">✓</span><span class="txt">Nightly export/dump scheduled off-box</span></li>
+  </ul>
+</section>
+
+<section class="step" id="s10">
+  <div class="stepnum">Step 10</div>
+  <h2>Node apps in production — beyond static pages</h2>
+  <p>When a site needs logins, payments, or live data, it becomes a <b>Node.js app</b>: a program that runs continuously and answers requests. Muse can write it, deploy it, and keep it alive — here's the shape of doing it right, on cPanel or your own server.</p>
+  <h3>On HyndSyte cPanel hosting</h3>
+  <ol>
+    <li>cPanel → <b>Setup Node.js App</b> → Create Application: pick the Node version, set the application root (its folder) and the startup file (usually <i>app.js</i>).</li>
+    <li>Upload the app (File Manager or Git), then click <b>Run NPM Install</b> in the same screen to install its dependencies.</li>
+    <li>Add environment variables in the Node screen — database credentials, API keys — never hard-code them in the code.</li>
+    <li><b>Restart the app</b> after every change; cPanel's Passenger layer serves it on your domain with the SSL from Step 8.</li>
+  </ol>
+  <h3>On your own server (Docker route)</h3>
+  <div class="code">FROM node:22-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --omit=dev
+COPY . .
+CMD ["node", "app.js"]<button class="copy">Copy</button></div>
+  <p>One container per app, a process manager or Docker's restart policy keeping it up, logs flowing somewhere you can read. Muse writes the Dockerfile; you approve what it exposes.</p>
+  <h3>The production checklist Muse should never skip</h3>
+  <ul>
+    <li><b>.env for secrets</b> — and .env never committed to Git.</li>
+    <li><b>Health check</b> — a <i>/health</i> route that answers OK, so watchers (Step 11) can tell alive from dead.</li>
+    <li><b>Logs</b> — errors written to a file or service, reviewed weekly.</li>
+    <li><b>Backups wired</b> — its database is in the nightly job from Step 9 before the first real user arrives.</li>
+  </ul>
+  <div class="prompt">Turn the tool you built me into a proper Node app I can run in production: environment variables for secrets, a /health route, logging, and a restart-safe setup. Give me the deploy steps for cPanel's Node.js App screen, and the Docker alternative for my home server — with the trade-offs in plain English.<button class="copy">Copy</button></div>
+  <ul class="checklist" data-step>
+    <li><span class="box">✓</span><span class="txt">App created in cPanel Node screen (or Docker) and restarting cleanly</span></li>
+    <li><span class="box">✓</span><span class="txt">Secrets in environment variables only</span></li>
+    <li><span class="box">✓</span><span class="txt">/health answers; database in nightly backups</span></li>
+  </ul>
+</section>
+
+<section class="step" id="s11">
+  <div class="stepnum">Step 11</div>
+  <h2>Schedules, watchers &amp; autopilot</h2>
+  <p>This is where the whole build pays off. Everything above was capability; this step is <b>initiative</b> — work that happens because past-you scheduled it.</p>
+  <table>
+    <tr><th>Mechanism</th><th>What it does</th><th>Example</th></tr>
+    <tr><td><b>Scheduled jobs</b></td><td>Run a task on a clock</td><td>Weekday 6:30 AM briefing: calendar, weather, overnight email, today's priorities</td></tr>
+    <tr><td><b>Watchers (hooks)</b></td><td>React when something happens</td><td>New lead email arrives → draft a reply and flag you; camera sees a person while you're away → alert with the snapshot</td></tr>
+    <tr><td><b>Goals</b></td><td>Long-running efforts with their own memory</td><td>“Grow the shop to 200 customers” — Muse tracks progress and works it between your conversations</td></tr>
+    <tr><td><b>Server cron</b></td><td>The machine-level classics</td><td>Backups, log rotation, health checks on every service from Step 7</td></tr>
+  </table>
+  <h3>The autopilot rules</h3>
+  <ul>
+    <li><b>Start silent.</b> New automations report what they <i>would</i> do for the first week. Promote them to acting once the reports are boring.</li>
+    <li><b>Alert on exceptions, not on success.</b> “Backup failed” is a message. “Backup succeeded” 365 times is noise that trains you to ignore the failure.</li>
+    <li><b>Every automation gets an owner and an off switch</b> — you, and a named way to stop it.</li>
+    <li><b>Review monthly.</b> Ten minutes: what's running, what's it done, what should die.</li>
+  </ul>
+  <div class="prompt">Turn my morning routine into a scheduled briefing: every weekday at 6:30 AM, summarize my calendar, flag urgent overnight email, check that last night's server backups succeeded, and give me the day's top three priorities. For the first week, prepare it but don't send anything anywhere — just have it ready here.<button class="copy">Copy</button></div>
+  <ul class="checklist" data-step>
+    <li><span class="box">✓</span><span class="txt">One scheduled briefing running</span></li>
+    <li><span class="box">✓</span><span class="txt">One watcher live, in report-only mode</span></li>
+    <li><span class="box">✓</span><span class="txt">Monthly automation review on the calendar</span></li>
+  </ul>
+</section>
+
+<section class="step" id="s12">
+  <div class="stepnum">Step 12</div>
+  <h2>Advanced — local agents, voice, and running a business on it</h2>
+  <h3>Local agents on your own hardware</h3>
+  <p>With Ollama on the home server (Step 7), Muse can delegate bulk work to local models: classify 500 emails, summarize documents, draft first passes — private, offline-capable, and free per use. The pattern that works: <b>local agents do volume, Muse does judgment.</b> Anything a local model produces that leaves the building gets Muse's review first.</p>
+  <div class="prompt">Design a local-agent setup for my server: which model for inbox classification, which for document summaries, and how you'll review their output before anything is sent or filed. Include the guardrails — what local agents may never do unsupervised.<button class="copy">Copy</button></div>
+  <h3>Voice — Muse that talks and answers the phone</h3>
+  <ul>
+    <li><b>Read-aloud &amp; voice notes:</b> briefings as audio for the drive; dictated brain-dumps transcribed into plans.</li>
+    <li><b>A real phone number:</b> through a voice provider, Muse can place and take calls — appointment reminders, follow-ups, after-hours answering with a transcript in your inbox by morning.</li>
+    <li><b>House voice:</b> wake-word satellites in rooms, tied to your home automation — “lights, status, who's home” without a phone in hand.</li>
+  </ul>
+  <h3>Its own inbox — Muse as staff</h3>
+  <p>Give Muse a business email address of its own. With rules you set, it answers routine questions (pricing, hours, scheduling) directly, drafts quotes for your approval, and escalates anything committing you — money, contracts, disputes — with a draft attached. Customers get fast answers; you keep the pen on everything that matters.</p>
+  <h3>Running the business on autopilot</h3>
+  <p>Assembled, a normal day looks like this: the 6:30 briefing lands before you're up; leads that arrived overnight have draft replies waiting; the shop's schedule, invoices, and follow-ups are tended by watchers; your sites and apps are monitored, backed up, and patched on the home stack and HyndSyte hosting alike; and your one job is the approval queue — the short list of things Muse prepared but won't do without your word. That's the OpenClaw you wished you'd had a year ago, except it answers to you, lives on your hardware, and keeps the keys where you can see them.</p>
+  <div class="prompt">Give me my current automation inventory: everything scheduled, watching, or running on my behalf, what each did in the last week, and your top three recommendations for what to automate next based on my businesses. Flag anything running that I haven't reviewed in over a month.<button class="copy">Copy</button></div>
+  <div class="callout"><b class="tag">Graduating to a managed VPS</b>When the business outgrows shared hosting and the home box — client sites that must never sleep, heavier apps, your own mail or AI services — a <b>HyndSyte VPS</b> is the next rung: your own virtual server, root access, Muse holding the keys under the same rules as Step 6. Ask for the managed option and the server arrives configured, monitored, and backed up — you bring the ideas, Muse and HyndSyte run the machine room.</div>
+  <ul class="checklist" data-step>
+    <li><span class="box">✓</span><span class="txt">Local agent doing one bulk job under review</span></li>
+    <li><span class="box">✓</span><span class="txt">Muse has its own business inbox with written triage rules</span></li>
+    <li><span class="box">✓</span><span class="txt">Weekly approval-queue review is a habit</span></li>
+  </ul>
+</section>
+
+<footer>
+  <p>The Muse Step-by-Step Guide — companion to the Beginner and Advanced guides. Hosting tiers and add-on pricing shown are HyndSyte's published rates at time of writing; AI agent usage is billed by use. Build in order, check the boxes, and keep the kill switch where you can find it.</p>
+</footer>
+
+</div>
+<script>
+(function(){
+  var boxes=document.querySelectorAll('[data-step] li');
+  var total=document.querySelectorAll('section.step').length;
+  function update(){
+    var doneSteps=0;
+    document.querySelectorAll('[data-step]').forEach(function(list){
+      var items=list.querySelectorAll('li');
+      var done=list.querySelectorAll('li.done').length;
+      if(done===items.length&&items.length)doneSteps++;
+    });
+    document.getElementById('ptext').textContent=doneSteps+' of '+total+' steps fully checked off';
+    document.getElementById('pfill').style.width=(doneSteps/total*100)+'%';
+  }
+  boxes.forEach(function(li){
+    li.addEventListener('click',function(){li.classList.toggle('done');update();});
+  });
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var pre=btn.parentElement.cloneNode(true);
+      var b=pre.querySelector('.copy'); if(b)b.remove();
+      var label=pre.querySelector('b.tag'); 
+      var text=pre.textContent.trim();
+      if(navigator.clipboard){navigator.clipboard.writeText(text);}
+      btn.textContent='Copied'; setTimeout(function(){btn.textContent='Copy';},1400);
+    });
+  });
+  update();
+})();
+</script>
+</body>
+</html>
